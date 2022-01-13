@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BycicleService} from "../../../core/services/bycicle.service";
+import {BycicleModel} from "../../../core/model/bycicle.model";
 
 @Component({
   selector: 'app-landingpage',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingpageComponent implements OnInit {
 
-  constructor() { }
+  byciclesList: BycicleModel[] = []
+  images: any[] = []
 
-  ngOnInit(): void {
+  constructor(private bycicleService: BycicleService) {
   }
+
+  ngOnInit() {
+    this.bycicleService.getAllBycicles().subscribe(response => {
+      this.byciclesList = response;
+      this.byciclesList.forEach(b => {
+        this.images.push({path: b.photo});
+      })
+    })
+
+
+  }
+
+
 
 }
