@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IvyCarouselModule} from "angular-responsive-carousel";
 import {HttpClientModule} from "@angular/common/http";
+import {ViewsModule} from "./views/views.module";
 
 
 @NgModule({
@@ -17,9 +18,9 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
     IvyCarouselModule,
     HttpClientModule,
+    ViewsModule
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

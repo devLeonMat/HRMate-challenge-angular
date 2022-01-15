@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SearchComponent} from "../../dialogs/search/search.component";
 
 @Component({
@@ -17,7 +17,10 @@ export class HeaderComponent implements OnInit {
 
 
   openSearchDialog() {
-    const dialogRef = this.dialog.open(SearchComponent);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width='80%';
+
+    const dialogRef = this.dialog.open(SearchComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

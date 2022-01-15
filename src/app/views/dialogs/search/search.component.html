@@ -1,19 +1,68 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+<h1 mat-dialog-title>Find your bike</h1>
+<div mat-dialog-content>
+  <form [formGroup]="searchFormGroup">
+    <div class="row">
+      <div class="col-4">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Address</mat-label>
+          <input type="text" matInput formControlName="address" (keyup)="searchBike()">
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>filter with</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="1">Exact date</mat-option>
+            <mat-option value="2">Range of date</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-4" *ngIf="searchFormGroup.get('type')?.value=='1'">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="date" (dateChange)="searchBike()">
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-4" *ngIf="searchFormGroup.get('type')?.value=='2'">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" formControlName="dateStart">
+            <input matEndDate placeholder="End date" formControlName="dateEnd" (dateChange)="searchBike()">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Address</th>
+      <th scope="col">Model</th>
+      <th scope="col">Available</th>
+      <th scope="col">Available date</th>
+      <th scope="col">Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let b of bycicles">
+      <td>{{b.location}}</td>
+      <td>{{b.model}}</td>
+      <td>{{b.available}}</td>
+      <td>{{b.dateAvailable|date:'short'}}</td>
+      <td><img [src]="b.photo" alt="" width="90"></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Reserve</button>
+</div>
